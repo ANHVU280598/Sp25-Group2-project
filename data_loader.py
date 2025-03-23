@@ -1,7 +1,7 @@
 
 import json
 from typing import List
-
+from datetime import datetime
 import config
 from model import Issue
 
@@ -40,4 +40,9 @@ class DataLoader:
 
 if __name__ == '__main__':
     # Run the loader for testing
-    DataLoader().get_issues()
+    issues = DataLoader().get_issues()
+    for issue in issues:
+        issue_dict = issue.__dict__.copy()  # Convert object to dictionary
+        issue_dict.pop("text", None)  # Remove 'text' field if it exists
+
+        print(json.dumps(issue_dict, indent=4, default=str))  # Convert everything to string
